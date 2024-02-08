@@ -1,0 +1,56 @@
+<form
+  class="border p-3 rounded-3"
+  [formGroup]="loginForm"
+  (ngSubmit)="loginSubmitted()"
+>
+  <div class="row g-0">
+    <div class="col text-center p-2 mb-3 bg-light">
+      <span class="fs-3">Login</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col mb-3">
+      <label for="empid" class="form-label">Employee Id:</label>
+      <input
+        type="number"
+        id="number"
+        class="form-control"
+        formControlName="empid"
+      />
+      <small
+        class="form-text text-danger"
+        *ngIf="Empid.errors?.['required'] && (Empid.dirty || Empid.touched)"
+        >Employee Id is required</small
+      >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col mb-3">
+      <label for="pwd" class="form-label">Password:</label>
+      <input
+        type="password"
+        id="pwd"
+        class="form-control"
+        formControlName="pwd"
+      />
+      <small
+        class="form-text text-danger"
+        *ngIf="PWD.errors?.['required'] && (PWD.dirty || PWD.touched)"
+        >Password is required</small
+      >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6 offset-3">
+      <div class="d-grid">
+        <button
+          type="submit"
+          [disabled]="loginForm.invalid"
+          class="btn btn-primary"
+        >
+          Login
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

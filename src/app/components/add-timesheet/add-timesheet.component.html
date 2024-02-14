@@ -14,14 +14,16 @@
       <option *ngFor="let loc of locations" [value]="loc">{{ loc }}</option>
     </select> -->
     <div class="form-group">
-      <select formControlName="location" class="form-control custom-dropdown">
+      <select formControlName="locationId" class="form-control custom-dropdown">
         <option value="" disabled selected>Select Location</option>
-        <option *ngFor="let loc of locations" [value]="loc">{{ loc }}</option>
+        <option *ngFor="let loc of locations" [value]="loc.locationId">
+          {{ loc.name }}
+        </option>
       </select>
     </div>
     <small
       class="form-text text-danger"
-      *ngIf="Location.errors?.['required'] && (Location.dirty || Location.touched)"
+      *ngIf="LocationId.errors?.['required'] && (LocationId.dirty || LocationId.touched)"
       >Location is required</small
     >
   </div>

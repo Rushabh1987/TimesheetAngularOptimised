@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -21,11 +20,11 @@ export class AuthService {
     );
   }
 
-  getTimesheetEntry(): Observable<any> {
-    return this.http.get<any>(this.baseServerUrl + 'TimesheetEntry');
-  }
+  // getTimesheetEntry(): Observable<any> {
+  //   return this.http.get<any>(this.baseServerUrl + 'TimesheetEntry');
+  // }
 
-  postTimesheetEntry(entry: any): Observable<any> {
-    return this.http.post<any>(this.baseServerUrl + 'TimesheetEntry', entry);
-  }
+  // postTimesheetEntry(entry: any): Observable<any> {
+  //   return this.http.post<any>(this.baseServerUrl + 'TimesheetEntry', entry);
+  // }
 }

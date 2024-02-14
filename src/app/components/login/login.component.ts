@@ -25,13 +25,13 @@ export class LoginComponent implements OnInit {
       .loginUser([this.loginForm.value.empid, this.loginForm.value.pwd])
       .subscribe((res) => {
         console.log(res);
-        if (res === 'failure') {
-          this.isUserValid === false;
-          alert('Login Unsuccessful');
-        } else {
+        if (res === 'success') {
           this.isUserValid === true;
           //alert('Login Successful');
           this.router.navigateByUrl('home');
+        } else {
+          this.isUserValid === false;
+          alert('Login Unsuccessful');
         }
       });
     //console.log(this.loginForm);

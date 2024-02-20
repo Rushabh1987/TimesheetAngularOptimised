@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocationModel } from 'src/app/Location.model';
-//import { LocationService } from 'src/app/services/location.service';
 import { TimesheetDataService } from 'src/app/services/timesheet-data.service';
 import { ngxCsv } from 'ngx-csv/ngx-csv';
 
@@ -51,7 +50,7 @@ export class TimesheetHistoryComponent implements OnInit {
     const csvData = this.entries.map((entry) => ({
       id: entry.id,
       date: entry.date,
-      location: entry.location.name, // Accessing the name property of the location object
+      location: entry.location.name,
       hours: entry.hours,
       billable: entry.billable,
     }));

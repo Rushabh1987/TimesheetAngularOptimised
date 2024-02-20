@@ -1,7 +1,11 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="form-group">
-    <label>Date</label>
-    <input type="date" formControlName="date" class="form-control" />
+    <label class="my-2"><strong>Date</strong></label>
+    <input
+      type="date"
+      formControlName="date"
+      class="form-control cursor-pointer"
+    />
     <small
       class="form-text text-danger"
       *ngIf="Date.errors?.['required'] && (Date.dirty || Date.touched)"
@@ -9,12 +13,15 @@
     >
   </div>
   <div class="form-group">
-    <label>Location</label>
+    <label class="my-2"><strong>Location</strong></label>
     <!-- <select formControlName="location" class="form-control">
       <option *ngFor="let loc of locations" [value]="loc">{{ loc }}</option>
     </select> -->
     <div class="form-group">
-      <select formControlName="locationId" class="form-control custom-dropdown">
+      <select
+        formControlName="locationId"
+        class="form-control custom-dropdown cursor-pointer"
+      >
         <option value="" disabled selected>Select Location</option>
         <option *ngFor="let loc of locations" [value]="loc.locationId">
           {{ loc.name }}
@@ -28,8 +35,12 @@
     >
   </div>
   <div class="form-group">
-    <label>Hours</label>
-    <input type="number" formControlName="hours" class="form-control" />
+    <label class="my-2"><strong>Hours</strong></label>
+    <input
+      type="number"
+      formControlName="hours"
+      class="form-control cursor-pointer"
+    />
     <small
       class="form-text text-danger"
       *ngIf="Hours.errors?.['required'] && (Hours.dirty || Hours.touched)"
@@ -37,12 +48,15 @@
     >
   </div>
   <div class="form-group">
-    <label>Non-billable/Billable</label>
-    <select formControlName="billable" class="form-control custom-dropdown">
+    <label class="my-2"><strong>Non-billable/Billable</strong></label>
+    <select
+      formControlName="billable"
+      class="form-control custom-dropdown cursor-pointer"
+    >
       <option value="" disabled selected>Select Value</option>
       <option value="Billable">Billable</option>
       <option value="Non-Billable">Non-billable</option>
     </select>
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary my-3">Submit</button>
 </form>

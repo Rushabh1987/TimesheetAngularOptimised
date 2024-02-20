@@ -36,7 +36,7 @@ export class AddTimesheetComponent implements OnInit {
       date: ['', Validators.required],
       locationId: ['', Validators.required],
       hours: ['0', Validators.required],
-      billable: ['Non-billable', Validators.required],
+      billable: ['', Validators.required],
     });
 
     //   this.locationService.getLocations().subscribe((locations) => {
@@ -46,6 +46,7 @@ export class AddTimesheetComponent implements OnInit {
     this.locationService.getLocations().subscribe({
       next: (location) => {
         this.locations = location;
+        console.log(location);
       },
       error: (err) => {
         console.log(err);

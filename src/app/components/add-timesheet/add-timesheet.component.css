@@ -7,3 +7,7 @@
   background-position: right 10px center;
   padding-right: 10px;
 }
+
+.cursor-pointer {
+  cursor: pointer;
+}

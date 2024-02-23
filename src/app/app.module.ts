@@ -10,14 +10,28 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { HomeComponent } from './components/home/home.component';
 import { AddTimesheetComponent } from './components/add-timesheet/add-timesheet.component';
 import { TimesheetHistoryComponent } from './components/timesheet-history/timesheet-history.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, PageNotFoundComponent, HomeComponent, AddTimesheetComponent, TimesheetHistoryComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    PageNotFoundComponent,
+    HomeComponent,
+    AddTimesheetComponent,
+    TimesheetHistoryComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatAutocompleteModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

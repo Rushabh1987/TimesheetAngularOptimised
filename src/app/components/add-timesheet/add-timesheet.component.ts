@@ -6,7 +6,8 @@ import {
   FormControl,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+//import { LocationModel } from 'src/app/Location.model';
+//import { AuthService } from 'src/app/services/auth.service';
 import { LocationService } from 'src/app/services/location.service';
 import { TimesheetDataService } from 'src/app/services/timesheet-data.service';
 
@@ -18,6 +19,10 @@ import { TimesheetDataService } from 'src/app/services/timesheet-data.service';
 export class AddTimesheetComponent implements OnInit {
   form!: FormGroup;
   locations: {
+    locationId: number;
+    name: string;
+  }[] = [];
+  filteredLocations?: {
     locationId: number;
     name: string;
   }[] = [];
@@ -38,14 +43,15 @@ export class AddTimesheetComponent implements OnInit {
       hours: ['0', Validators.required],
       billable: ['', Validators.required],
     });
-
-    //   this.locationService.getLocations().subscribe((locations) => {
-    //     this.locations = locations.map((location) => location.name);
-    //   });
+    this.form.get('locationId')?.valueChanges.subscribe((res) => {
+      //console.log(res);
+      this.filterData(res);
+    });
 
     this.locationService.getLocations().subscribe({
       next: (location) => {
         this.locations = location;
+        this.filteredLocations = location;
         console.log(location);
       },
       error: (err) => {
@@ -54,7 +60,24 @@ export class AddTimesheetComponent implements OnInit {
     });
   }
 
+  filterData(data: string) {
+    if (typeof data === 'string') {
+      this.filteredLocations = this.locations.filter((item) => {
+        return item.name.toLowerCase().indexOf(data.toLowerCase()) > -1;
+      });
+    } else {
+      this.filteredLocations = this.locations;
+    }
+  }
+
   onSubmit() {
+    const selectedLocation = this.filteredLocations?.find(
+      (loc) => loc.name === this.form.value.locationId
+    );
+    // If a location is found, assign its ID to the form value
+    if (selectedLocation) {
+      this.form.patchValue({ locationId: selectedLocation.locationId });
+    }
     this.dataService.postTimesheetEntry(this.form.value).subscribe({
       next: (entry) => {
         console.log(entry);

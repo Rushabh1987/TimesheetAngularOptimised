@@ -1,5 +1,5 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <div class="form-group">
+  <div class="form-group my-4">
     <label class="my-2"><strong>Date</strong></label>
     <input
       type="date"
@@ -13,11 +13,11 @@
     >
   </div>
   <div class="form-group">
-    <label class="my-2"><strong>Location</strong></label>
+    <!-- <label class="my-2"><strong>Location</strong></label> -->
     <!-- <select formControlName="location" class="form-control">
       <option *ngFor="let loc of locations" [value]="loc">{{ loc }}</option>
     </select> -->
-    <div class="form-group">
+    <!-- <div class="form-group">
       <select
         formControlName="locationId"
         class="form-control custom-dropdown cursor-pointer"
@@ -27,7 +27,22 @@
           {{ loc.name }}
         </option>
       </select>
-    </div>
+    </div> -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label> <strong>Location</strong> </mat-label>
+      <input
+        formControlName="locationId"
+        matInput
+        type="text"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let loc of filteredLocations" [value]="loc.name">
+          {{ loc.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <!-- <input type="hidden" formControlName="locationId" /> -->
     <small
       class="form-text text-danger"
       *ngIf="LocationId.errors?.['required'] && (LocationId.dirty || LocationId.touched)"
@@ -47,7 +62,7 @@
       >Hours value is required</small
     >
   </div>
-  <div class="form-group">
+  <div class="form-group mt-3">
     <label class="my-2"><strong>Non-billable/Billable</strong></label>
     <select
       formControlName="billable"

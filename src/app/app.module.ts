@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { EditTimesheetComponent } from './components/edit-timesheet/edit-timesheet.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     HomeComponent,
     AddTimesheetComponent,
     TimesheetHistoryComponent,
+    EditTimesheetComponent,
   ],
   imports: [
     BrowserModule,

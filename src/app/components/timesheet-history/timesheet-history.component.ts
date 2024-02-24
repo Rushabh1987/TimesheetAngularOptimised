@@ -46,6 +46,22 @@ export class TimesheetHistoryComponent implements OnInit {
     });
   }
 
+  editTimesheet(entryId: number) {
+    this.router.navigateByUrl(`editTimesheet/${entryId}`);
+  }
+
+  deleteTimesheet(id: any) {
+    this.dataService.deleteTimesheetEntry(id).subscribe({
+      next: (entry) => {
+        this.entries = this.entries.filter((e) => e.id !== id);
+        console.log('Entry deleted successfully');
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
   downloadTimesheet() {
     const csvData = this.entries.map((entry) => ({
       id: entry.id,

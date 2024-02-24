@@ -5,6 +5,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { HomeComponent } from './components/home/home.component';
 import { AddTimesheetComponent } from './components/add-timesheet/add-timesheet.component';
 import { TimesheetHistoryComponent } from './components/timesheet-history/timesheet-history.component';
+import { EditTimesheetComponent } from './components/edit-timesheet/edit-timesheet.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
   },
   { path: 'addTimesheet', component: AddTimesheetComponent },
   { path: 'timesheetHistory', component: TimesheetHistoryComponent },
+  { path: 'editTimesheet/:id', component: EditTimesheetComponent },
   {
     path: '**',
     component: PageNotFoundComponent,

@@ -15,10 +15,29 @@ export class TimesheetDataService {
     );
   }
 
+  getTimesheetEntryById(id: any): Observable<any> {
+    return this.http.get<any>(
+      this.authService.baseServerUrl + 'TimesheetEntry/' + id
+    );
+  }
+
   postTimesheetEntry(entry: any): Observable<any> {
     return this.http.post<any>(
       this.authService.baseServerUrl + 'TimesheetEntry',
       entry
+    );
+  }
+
+  editTimesheetEntry(inputData: any) {
+    return this.http.put<any>(
+      this.authService.baseServerUrl + 'TimesheetEntry',
+      inputData
+    );
+  }
+
+  deleteTimesheetEntry(id: number): Observable<any> {
+    return this.http.delete(
+      this.authService.baseServerUrl + 'TimesheetEntry?id=' + id
     );
   }
 }

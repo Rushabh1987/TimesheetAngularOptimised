@@ -15,6 +15,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { EditTimesheetComponent } from './components/edit-timesheet/edit-timesheet.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { MatConfirmDialogComponent } from './components/mat-confirm-dialog/mat-confirm-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -25,6 +29,8 @@ import { EditTimesheetComponent } from './components/edit-timesheet/edit-timeshe
     AddTimesheetComponent,
     TimesheetHistoryComponent,
     EditTimesheetComponent,
+    SpinnerComponent,
+    MatConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,6 +40,8 @@ import { EditTimesheetComponent } from './components/edit-timesheet/edit-timeshe
     BrowserAnimationsModule,
     MatInputModule,
     MatAutocompleteModule,
+    NgxPaginationModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

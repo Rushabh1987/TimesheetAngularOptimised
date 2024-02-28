@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { LocationModel } from 'src/app/Location.model';
 import { TimesheetDataService } from 'src/app/services/timesheet-data.service';
 import { ngxCsv } from 'ngx-csv/ngx-csv';
+import { LoadingService } from 'src/app/services/loading.service';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   selector: 'app-timesheet-history',
@@ -17,16 +19,20 @@ export class TimesheetHistoryComponent implements OnInit {
     hours: number;
     billable: string;
   }[] = [];
+  p: number = 1;
 
   constructor(
     private dataService: TimesheetDataService,
     //private locationService: LocationService,
-    private router: Router
+    private router: Router,
+    public loadingService: LoadingService,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit(): void {
     this.dataService.getTimesheetEntry().subscribe({
       next: (entry) => {
+        this.loadingService.setLoadingState(true);
         //this.entries = entry.sort((a: any, b: any) => b.id - a.id);
         // entry.forEach((e: any) => {
         //   this.locationService
@@ -38,10 +44,12 @@ export class TimesheetHistoryComponent implements OnInit {
         // });
 
         this.entries = entry;
+        this.loadingService.setLoadingState(false);
         console.log(entry);
       },
       error: (err) => {
         console.log(err);
+        this.loadingService.setLoadingState(false);
       },
     });
   }
@@ -51,10 +59,38 @@ export class TimesheetHistoryComponent implements OnInit {
   }
 
   deleteTimesheet(id: any) {
-    this.dataService.deleteTimesheetEntry(id).subscribe({
-      next: (entry) => {
-        this.entries = this.entries.filter((e) => e.id !== id);
-        console.log('Entry deleted successfully');
+    // this.dataService.deleteTimesheetEntry(id).subscribe({
+    //   next: (entry) => {
+    //     this.entries = this.entries.filter((e) => e.id !== id);
+    //     console.log('Entry deleted successfully');
+    //   },
+    //   error: (err) => {
+    //     console.log(err);
+    //   },
+    // });
+    this.dialogService
+      .openConfirmDialog()
+      .afterClosed()
+      .subscribe((res) => {
+        console.log(res);
+        if (res) {
+          this.dataService.deleteTimesheetEntry(id).subscribe({
+            next: (entry) => {
+              this.entries = this.entries.filter((e) => e.id !== id);
+              console.log('Entry deleted successfully');
+            },
+            error: (err) => {
+              console.log(err);
+            },
+          });
+        }
+      });
+  }
+
+  downloadCsvData() {
+    this.dataService.postCsvData(this.entries).subscribe({
+      next: (res) => {
+        console.log(res);
       },
       error: (err) => {
         console.log(err);
@@ -62,29 +98,29 @@ export class TimesheetHistoryComponent implements OnInit {
     });
   }
 
-  downloadTimesheet() {
-    const csvData = this.entries.map((entry) => ({
-      id: entry.id,
-      date: entry.date,
-      location: entry.location.name,
-      hours: entry.hours,
-      billable: entry.billable,
-    }));
+  // downloadTimesheet() {
+  //   const csvData = this.entries.map((entry) => ({
+  //     id: entry.id,
+  //     date: entry.date,
+  //     location: entry.location.name,
+  //     hours: entry.hours,
+  //     billable: entry.billable,
+  //   }));
 
-    var options = {
-      fieldSeparator: ',',
-      quoteStrings: '"',
-      decimalseparator: '.',
-      showLabels: true,
-      showTitle: true,
-      title: 'Timesheet Data',
-      useBom: true,
-      noDownload: false,
-      headers: ['Id', 'Date', 'Location', 'Hours', 'Billable/Non-Billable'],
-    };
+  //   var options = {
+  //     fieldSeparator: ',',
+  //     quoteStrings: '"',
+  //     decimalseparator: '.',
+  //     showLabels: true,
+  //     showTitle: true,
+  //     title: 'Timesheet Data',
+  //     useBom: true,
+  //     noDownload: false,
+  //     headers: ['Id', 'Date', 'Location', 'Hours', 'Billable/Non-Billable'],
+  //   };
 
-    new ngxCsv(csvData, 'Timesheet Report', options);
-  }
+  //   new ngxCsv(csvData, 'Timesheet Report', options);
+  // }
 
   goToAddTimesheet() {
     this.router.navigateByUrl('addTimesheet');

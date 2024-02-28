@@ -10,47 +10,62 @@
           >
             Fill Timesheet
           </button>
-          <button (click)="downloadTimesheet()" class="btn btn-success rounded">
+          <button (click)="downloadCsvData()" class="btn btn-success rounded">
             Download
           </button>
         </div>
       </h1>
-
-      <table class="table" *ngIf="entries && entries.length > 0">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Location</th>
-            <th>Hours</th>
-            <th>Billable/Non-Billable</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let entry of entries">
-            <td>{{ entry.date }}</td>
-            <td>{{ entry.location.name }}</td>
-            <td>{{ entry.hours }}</td>
-            <td>
-              {{ entry.billable }}
-            </td>
-            <td>
-              <button
-                (click)="editTimesheet(entry.id)"
-                class="btn btn-primary btn-warning me-2"
-              >
-                Edit
-              </button>
-              <button
-                (click)="deleteTimesheet(entry.id)"
-                class="btn btn-danger"
-              >
-                Delete
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <p *ngIf="entries.length === 0">No Entries Found</p>
+      <div class="container my-5" *ngIf="loadingService.isLoading$ | async">
+        <app-spinner></app-spinner>
+      </div>
+      <div *ngIf="(loadingService.isLoading$ | async) === false">
+        <table class="table" *ngIf="entries && entries.length > 0">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Location</th>
+              <th>Hours</th>
+              <th>Billable/Non-Billable</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let entry of entries
+                  | paginate : { itemsPerPage: 5, currentPage: p }
+              "
+            >
+              <td>{{ entry.date }}</td>
+              <td>{{ entry.location.name }}</td>
+              <td>{{ entry.hours }}</td>
+              <td>
+                {{ entry.billable }}
+              </td>
+              <td>
+                <button
+                  (click)="editTimesheet(entry.id)"
+                  class="btn btn-primary btn-warning me-2"
+                >
+                  Edit
+                </button>
+                <button
+                  (click)="deleteTimesheet(entry.id)"
+                  class="btn btn-danger"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination-controls
+          (pageChange)="p = $event"
+          class="paginate"
+        ></pagination-controls>
+      </div>
+      <div *ngIf="entries.length === 0" class="text-center mt-5">
+        <h1 class="heading">Entries not found</h1>
+      </div>
     </div>
   </div>
 </div>

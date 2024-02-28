@@ -28,6 +28,13 @@ export class TimesheetDataService {
     );
   }
 
+  postCsvData(entries: any): Observable<any> {
+    return this.http.post<any>(
+      this.authService.baseServerUrl + 'TimesheetEntry/write-employee-csv',
+      entries
+    );
+  }
+
   editTimesheetEntry(inputData: any) {
     return this.http.put<any>(
       this.authService.baseServerUrl + 'TimesheetEntry',

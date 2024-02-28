@@ -30,7 +30,7 @@ export class TimesheetDataService {
 
   postCsvData(entries: any): Observable<any> {
     return this.http.post<any>(
-      this.authService.baseServerUrl + 'TimesheetEntry/write-employee-csv',
+      this.authService.baseServerUrl + 'TimesheetEntry/write-timesheet-csv',
       entries
     );
   }

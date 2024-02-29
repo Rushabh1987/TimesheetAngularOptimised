@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocationModel } from 'src/app/Location.model';
 import { TimesheetDataService } from 'src/app/services/timesheet-data.service';
-import { ngxCsv } from 'ngx-csv/ngx-csv';
+//import { ngxCsv } from 'ngx-csv/ngx-csv';
 import { LoadingService } from 'src/app/services/loading.service';
 import { DialogService } from 'src/app/services/dialog.service';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-timesheet-history',
@@ -87,15 +88,27 @@ export class TimesheetHistoryComponent implements OnInit {
       });
   }
 
+  // downloadCsvData() {
+  //   this.dataService.postCsvData(this.entries).subscribe({
+  //     next: (res) => {
+  //       console.log(res);
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //     },
+  //   });
+  // }
+
   downloadCsvData() {
-    this.dataService.postCsvData(this.entries).subscribe({
-      next: (res) => {
-        console.log(res);
-      },
-      error: (err) => {
-        console.log(err);
-      },
+    this.dataService.getCsvData().subscribe((csvData: any) => {
+      console.log(csvData);
+      this.downloadFile(csvData, 'data.csv');
     });
+  }
+
+  private downloadFile(data: string, filename: string) {
+    const blob = new Blob([data], { type: 'text/csv' });
+    saveAs(blob, filename);
   }
 
   // downloadTimesheet() {
